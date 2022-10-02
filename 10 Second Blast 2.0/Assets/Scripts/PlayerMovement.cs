@@ -51,8 +51,8 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         // Gets horizontal input
-        movement.y = playerController.Movement.WS.ReadValue<float>();
-        movement.x = playerController.Movement.AD.ReadValue<float>();
+        movement.y = playerController.Gameplay.WS.ReadValue<float>();
+        movement.x = playerController.Gameplay.AD.ReadValue<float>();
 
 
         // calculates movement on ground

@@ -24,22 +24,31 @@ public partial class @Controller : IInputActionCollection2, IDisposable
     ""name"": ""Controller"",
     ""maps"": [
         {
-            ""name"": ""Movement"",
-            ""id"": ""41f96c69-32f1-4907-be50-6ca28ee9c181"",
+            ""name"": ""Gameplay"",
+            ""id"": ""babee1a7-f184-4099-9e93-9e635d03779f"",
             ""actions"": [
                 {
                     ""name"": ""WS"",
-                    ""type"": ""Value"",
-                    ""id"": ""80330599-a036-4af2-840e-cc347484c63d"",
+                    ""type"": ""Button"",
+                    ""id"": ""2355904c-ba44-4ac6-9aa9-b139d0573154"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""AD"",
                     ""type"": ""Button"",
-                    ""id"": ""7216e10e-c00c-412c-9547-480cfe087eaf"",
+                    ""id"": ""7eb3dd69-754f-474e-98ed-83313ecc7511"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""df8c043a-f7c4-46e6-90ae-87e47187ddad"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -49,7 +58,7 @@ public partial class @Controller : IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": ""YAxis"",
-                    ""id"": ""71174e3d-4523-4aae-975e-5aed7ad9560d"",
+                    ""id"": ""f23c535c-d2dc-47fd-abb4-a35e49a7b7b9"",
                     ""path"": ""1DAxis"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -60,7 +69,7 @@ public partial class @Controller : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""negative"",
-                    ""id"": ""923d63ee-8d75-43ad-9342-aac6c6ed3e68"",
+                    ""id"": ""963595b9-d3ec-4813-82b2-125ba5719fe1"",
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -71,7 +80,7 @@ public partial class @Controller : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""positive"",
-                    ""id"": ""bcaed89d-24b9-44aa-9470-ae79f47cfff6"",
+                    ""id"": ""f4775320-9626-4498-a14f-402fd37503db"",
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -82,7 +91,7 @@ public partial class @Controller : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""XAxis"",
-                    ""id"": ""42a3a99e-5e4e-4e18-9cb1-c2f5f2782ac1"",
+                    ""id"": ""22e55d93-6664-45e4-bb21-212eca03f20f"",
                     ""path"": ""1DAxis"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -93,7 +102,7 @@ public partial class @Controller : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""negative"",
-                    ""id"": ""4e6aed6e-f748-438a-a928-02051b71342f"",
+                    ""id"": ""9c932e0d-70bb-4af2-81d1-bdc655f4f567"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -104,7 +113,7 @@ public partial class @Controller : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""positive"",
-                    ""id"": ""5185520b-09f7-4925-acac-4a7502b19be4"",
+                    ""id"": ""28272c47-d5dc-49e6-9025-7c27fdaa7b09"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -112,16 +121,28 @@ public partial class @Controller : IInputActionCollection2, IDisposable
                     ""action"": ""AD"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f22c97e6-0e32-4efd-b9fe-60e10627a90e"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
     ],
     ""controlSchemes"": []
 }");
-        // Movement
-        m_Movement = asset.FindActionMap("Movement", throwIfNotFound: true);
-        m_Movement_WS = m_Movement.FindAction("WS", throwIfNotFound: true);
-        m_Movement_AD = m_Movement.FindAction("AD", throwIfNotFound: true);
+        // Gameplay
+        m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
+        m_Gameplay_WS = m_Gameplay.FindAction("WS", throwIfNotFound: true);
+        m_Gameplay_AD = m_Gameplay.FindAction("AD", throwIfNotFound: true);
+        m_Gameplay_Pause = m_Gameplay.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -178,34 +199,39 @@ public partial class @Controller : IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // Movement
-    private readonly InputActionMap m_Movement;
-    private IMovementActions m_MovementActionsCallbackInterface;
-    private readonly InputAction m_Movement_WS;
-    private readonly InputAction m_Movement_AD;
-    public struct MovementActions
+    // Gameplay
+    private readonly InputActionMap m_Gameplay;
+    private IGameplayActions m_GameplayActionsCallbackInterface;
+    private readonly InputAction m_Gameplay_WS;
+    private readonly InputAction m_Gameplay_AD;
+    private readonly InputAction m_Gameplay_Pause;
+    public struct GameplayActions
     {
         private @Controller m_Wrapper;
-        public MovementActions(@Controller wrapper) { m_Wrapper = wrapper; }
-        public InputAction @WS => m_Wrapper.m_Movement_WS;
-        public InputAction @AD => m_Wrapper.m_Movement_AD;
-        public InputActionMap Get() { return m_Wrapper.m_Movement; }
+        public GameplayActions(@Controller wrapper) { m_Wrapper = wrapper; }
+        public InputAction @WS => m_Wrapper.m_Gameplay_WS;
+        public InputAction @AD => m_Wrapper.m_Gameplay_AD;
+        public InputAction @Pause => m_Wrapper.m_Gameplay_Pause;
+        public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(MovementActions set) { return set.Get(); }
-        public void SetCallbacks(IMovementActions instance)
+        public static implicit operator InputActionMap(GameplayActions set) { return set.Get(); }
+        public void SetCallbacks(IGameplayActions instance)
         {
-            if (m_Wrapper.m_MovementActionsCallbackInterface != null)
+            if (m_Wrapper.m_GameplayActionsCallbackInterface != null)
             {
-                @WS.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnWS;
-                @WS.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnWS;
-                @WS.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnWS;
-                @AD.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnAD;
-                @AD.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnAD;
-                @AD.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnAD;
+                @WS.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnWS;
+                @WS.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnWS;
+                @WS.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnWS;
+                @AD.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAD;
+                @AD.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAD;
+                @AD.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAD;
+                @Pause.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
             }
-            m_Wrapper.m_MovementActionsCallbackInterface = instance;
+            m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
             {
                 @WS.started += instance.OnWS;
@@ -214,13 +240,17 @@ public partial class @Controller : IInputActionCollection2, IDisposable
                 @AD.started += instance.OnAD;
                 @AD.performed += instance.OnAD;
                 @AD.canceled += instance.OnAD;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
-    public MovementActions @Movement => new MovementActions(this);
-    public interface IMovementActions
+    public GameplayActions @Gameplay => new GameplayActions(this);
+    public interface IGameplayActions
     {
         void OnWS(InputAction.CallbackContext context);
         void OnAD(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }
