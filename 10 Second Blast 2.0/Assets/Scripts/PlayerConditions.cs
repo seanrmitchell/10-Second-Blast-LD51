@@ -9,11 +9,18 @@ public class PlayerConditions : MonoBehaviour
     private float health = 0f;
     [SerializeField]
     private float maxHealth = 3f;
+    [SerializeField]
+    private Rigidbody2D rb;
 
     public GameOver gameOver;
 
+    public DeathBox outsideBox;
+
+
 
     private Transform hit;
+
+    
 
     private void Start()
     {
@@ -31,6 +38,17 @@ public class PlayerConditions : MonoBehaviour
         {
             health = 0f;
             gameOver.DetermineGameOver();
+        }
+    }
+
+    void Update()
+    {
+        if (outsideBox.IsOutsideBox(rb.position))
+        {
+            UpdateHealth(-outsideBox.damageOfBox);
+        } else if(outsideBox.gameObject.GetComponent<DeathBox>().coolDownBox >= 10)
+        {
+            outsideBox.gameObject.GetComponent<DeathBox>().coolDownBox = 10f;
         }
     }
 }
