@@ -19,11 +19,12 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private LayerMask playerLayer;
 
-    [SerializeField]
-    private Rigidbody2D player;
-
     private Transform target ;
 
+    void Awake()
+    {
+        target = GameObject.Find("Player").transform;
+    }
 
     private void Start()
     {
@@ -47,39 +48,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    /*
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-            target = null;
-            Debug.Log("no target");
-        }
-    }
-
-    
-    private void OnTriggerStay2D(Collider2D col)
-    {
-        if (col.gameObject.tag == "Player")
-        {
-            if(attackSpeed <= canAttack)
-            {
-                col.gameObject.GetComponent<PlayerConditions>().UpdateHealth(-damage);
-                canAttack = 0f;
-            } else
-            {
-                canAttack += Time.deltaTime;
-            }
-            
-        }
-    }
-    */
-
-    void Awake()
-    {
-        target = player.transform;
-    }
-
     void Update()
     {
         float step = speed * Time.deltaTime;
@@ -92,20 +60,4 @@ public class Enemy : MonoBehaviour
         
         
     }
-
-
-
-    /*
-    private bool PlayerInSight()
-    {
-        RaycastHit2D hit = Physics2D.BoxCast(box.bounds.center + transform.right * range * transform.localScale.x, box.bounds.size, 0, Vector2.left, 0, playerLayer);
-        return hit.collider != null;
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(box.bounds.center + transform.right * range * transform.localScale.x, box.bounds.size);
-    }
-    */
 }

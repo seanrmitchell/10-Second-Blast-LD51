@@ -11,6 +11,9 @@ public class EnemySpawn : MonoBehaviour
 
     [SerializeField]
     private GameObject enemyPrefab;
+    
+    [SerializeField]
+    private Rigidbody2D playerRB;
 
     private int randomSpawnZone;
     private float randomX, randomY;
@@ -37,26 +40,26 @@ public class EnemySpawn : MonoBehaviour
             switch (randomSpawnZone)
             {
                 case 0:
-                    randomX = Random.Range(-11f, -10f);
-                    randomY = Random.Range(-8f, -8f);
+                    randomX = Random.Range(-20f, -10f);
+                    randomY = Random.Range(-20f, -10f);
                     break;
                 case 1:
-                    randomX = Random.Range(-10f, -10f);
-                    randomY = Random.Range(-7f, -8f);
+                    randomX = Random.Range(-10f, 0f);
+                    randomY = Random.Range(-10f, 0f);
                     break;
                 case 2:
-                    randomX = Random.Range(10f, 11f);
-                    randomY = Random.Range(-8f, 8f);
+                    randomX = Random.Range(0f, 10f);
+                    randomY = Random.Range(-10f, 0f);
                     break;
                 case 3:
-                    randomX = Random.Range(-10f, 10f);
-                    randomY = Random.Range(7f, 8f);
+                    randomX = Random.Range(0f, 10f);
+                    randomY = Random.Range(0f, 10f);
                     break;
             }
 
             spawnPoint = new Vector2(randomX, randomY);
             GameObject enemy = Instantiate(enemyPrefab, spawnPoint, Quaternion.identity);
+            //enemy.GetComponent<Enemy>().playerBody = playerRB;
         }
-        enemySpawnNumber *= enemySpawnMulti;
     }
 }

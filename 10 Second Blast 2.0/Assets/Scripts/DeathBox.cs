@@ -15,8 +15,6 @@ public class DeathBox : MonoBehaviour
 
     private float currentCoolDown;
 
-    public EnemySpawn spawn;
-
     private void Awake()
     {
 
@@ -76,18 +74,18 @@ public class DeathBox : MonoBehaviour
 
     private void Update()
     {
-        if (currentCoolDown <= coolDownBox)
+        if (currentCoolDown < coolDownBox)
         {
             Vector3 sizeChangeVector = (targetBoxSize - boxSize).normalized;
             Vector3 newBoxSize = boxSize + sizeChangeVector * Time.deltaTime * boxShrinkSpeed;
             SetBoxSize(boxPosition, newBoxSize);
             currentCoolDown += Time.deltaTime;
         }
-        else if (currentCoolDown > coolDownBox && coolDownBox < coolDownBox * 2)
+        else if (currentCoolDown >= coolDownBox && currentCoolDown < coolDownBox * 2)
         {
             currentCoolDown += Time.deltaTime;
         }
-        else if (coolDownBox >= coolDownBox * 2)
+        else if (currentCoolDown >= coolDownBox * 2)
         {
             Debug.Log("Cooldown Up!");
             currentCoolDown = 0;

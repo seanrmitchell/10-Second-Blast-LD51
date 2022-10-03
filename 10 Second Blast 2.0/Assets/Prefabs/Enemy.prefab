@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7451413682133226699}
   - component: {fileID: 7451413682133226695}
   - component: {fileID: 7451413682133226694}
+  - component: {fileID: 8839175002595077417}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -106,7 +107,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
-  player: {fileID: 6603733550124851585, guid: 0a660149d4724364999fdcf06e3d99b9, type: 3}
+  player: {fileID: 0}
 --- !u!58 &7451413682133226695
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -139,3 +140,24 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!50 &8839175002595077417
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7451413682133226701}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
