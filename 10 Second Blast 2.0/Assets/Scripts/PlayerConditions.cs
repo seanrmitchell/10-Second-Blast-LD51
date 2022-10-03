@@ -46,9 +46,13 @@ public class PlayerConditions : MonoBehaviour
         if (outsideBox.IsOutsideBox(rb.position))
         {
             UpdateHealth(-outsideBox.damageOfBox);
-        } else if(outsideBox.gameObject.GetComponent<DeathBox>().coolDownBox >= 10)
+        }
+
+        /*
+        else if(outsideBox.gameObject.GetComponent<DeathBox>().coolDownBox >= 10)
         {
             outsideBox.gameObject.GetComponent<DeathBox>().coolDownBox = 10f;
         }
+        */
     }
 }

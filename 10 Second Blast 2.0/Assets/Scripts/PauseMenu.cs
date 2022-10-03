@@ -25,7 +25,6 @@ public class PauseMenu : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Start Pause");
         playerInput.Gameplay.Pause.performed += _ => DeterminePause();
     }
 

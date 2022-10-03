@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -14,12 +16,14 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField]
     private LayerMask groundObjects;
-    private Camera cam;
+
+    
 
     [SerializeField]
     private Rigidbody2D rb;
 
     Vector2 movement;
+    Vector2 mousePos, worldPos;
 
     private void Awake()
     {
@@ -46,6 +50,8 @@ public class PlayerMovement : MonoBehaviour
     {
         Flip();
 
+        mousePos = Mouse.current.position.ReadValue();
+        worldPos = Camera.main.ScreenToWorldPoint(mousePos);
     }
 
     private void FixedUpdate()
@@ -58,6 +64,11 @@ public class PlayerMovement : MonoBehaviour
         // calculates movement on ground
         rb.MovePosition(rb.position + movement * speed * Time.fixedDeltaTime);
         //Vector2 playerMove = new Vector2(Mathf.Clamp(movement * speed, -maxSpeed, maxSpeed), rb.velocity.y);
+
+        Vector2 fireDir = worldPos - rb.position;
+        float angle = Mathf.Atan2(fireDir.y, fireDir.x) * Mathf.Rad2Deg - 90f; ;
+        rb.rotation = angle;
+
     }
 
     private void Flip()

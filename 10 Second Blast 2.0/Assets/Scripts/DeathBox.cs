@@ -13,8 +13,15 @@ public class DeathBox : MonoBehaviour
     [SerializeField]
     public float damageOfBox, coolDownBox, boxShrinkSpeed;
 
+    private float currentCoolDown;
+
+    public EnemySpawn spawn;
+
     private void Awake()
     {
+
+        currentCoolDown = coolDownBox;
+
         boxTransform = transform.Find("SquareShrink");
         leftTransform = transform.Find("Left");
         rightTransform = transform.Find("Right");
@@ -26,40 +33,42 @@ public class DeathBox : MonoBehaviour
         targetBoxSize = new Vector3(5,5);
     }
 
+    // Sets the center box's size, and the following boxes surrounding it
     private void SetBoxSize(Vector3 position, Vector3 size)
     {
+        // set variables for current box position, and current box size-
         boxPosition = position;
         boxSize = size;
-        Debug.Log(position);
 
         transform.position = position;
 
         boxTransform.localScale = size;
 
+        //top box
         topTransform.localScale = new Vector3(200, 200);
-        topTransform.localPosition = new Vector3(0, topTransform.localScale.y * .5f + size.y * 0.45f);
+        topTransform.localPosition = new Vector3(0, topTransform.localScale.y * .5f + size.y * 0.5f);
 
+        //bottom box
         bottomTransform.localScale = new Vector3(200, 200);
-        bottomTransform.localPosition = new Vector3(0, -topTransform.localScale.y * .5f - size.y * 0.45f);
+        bottomTransform.localPosition = new Vector3(0, -topTransform.localScale.y * .5f - size.y * 0.5f);
 
+        //right box
         rightTransform.localScale = new Vector3(200, size.y);
-        rightTransform.localPosition = new Vector3(+leftTransform.localScale.x * 0.5f + size.x * .5f, 0f);
+        rightTransform.localPosition = new Vector3(+leftTransform.localScale.x * 0.5f + size.x * 0.5f, 0f);
 
+        //left box
         leftTransform.localScale = new Vector3(200, size.y);
-        leftTransform.localPosition = new Vector3(-leftTransform.localScale.x * 0.5f - size.x * 0.45f, 0f);
+        leftTransform.localPosition = new Vector3(-leftTransform.localScale.x * 0.5f - size.x * 0.5f, 0f);
     }
 
     public bool IsOutsideBox(Vector3 position)
     {
-        if (coolDownBox >= 10 && Vector3.Distance(position, boxPosition) > boxSize.x/2)
+        if (Vector3.Distance(position, boxPosition) > boxSize.x/2)
         {
-            Debug.Log("Outside Box");
-            coolDownBox = 0f;
             return true;
         }
         else
         {
-            coolDownBox += Time.deltaTime;
             return false;
         }
             
@@ -67,8 +76,21 @@ public class DeathBox : MonoBehaviour
 
     private void Update()
     {
-        Vector3 sizeChangeVector = (targetBoxSize - boxSize).normalized;
-        Vector3 newBoxSize = boxSize + sizeChangeVector * Time.deltaTime * boxShrinkSpeed;
-        SetBoxSize(boxPosition, newBoxSize);
+        if (currentCoolDown <= coolDownBox)
+        {
+            Vector3 sizeChangeVector = (targetBoxSize - boxSize).normalized;
+            Vector3 newBoxSize = boxSize + sizeChangeVector * Time.deltaTime * boxShrinkSpeed;
+            SetBoxSize(boxPosition, newBoxSize);
+            currentCoolDown += Time.deltaTime;
+        }
+        else if (currentCoolDown > coolDownBox && coolDownBox < coolDownBox * 2)
+        {
+            currentCoolDown += Time.deltaTime;
+        }
+        else if (coolDownBox >= coolDownBox * 2)
+        {
+            Debug.Log("Cooldown Up!");
+            currentCoolDown = 0;
+        }
     }
 }

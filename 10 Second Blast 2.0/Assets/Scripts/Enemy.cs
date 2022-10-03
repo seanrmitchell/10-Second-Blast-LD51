@@ -32,10 +32,18 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (attackSpeed >= attackCoolDown)
+        if (other.gameObject.tag == "Player")
         {
-            other.gameObject.GetComponent<PlayerConditions>().UpdateHealth(-damage);
-            attackSpeed = 0f;
+            if (attackSpeed >= attackCoolDown)
+            {
+                other.gameObject.GetComponent<PlayerConditions>().UpdateHealth(-damage);
+                attackSpeed = 0f;
+            }
+        }
+
+        if (other.gameObject.tag == "Laser")
+        {
+            Destroy(gameObject);
         }
     }
 
