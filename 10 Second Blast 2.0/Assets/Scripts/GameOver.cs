@@ -44,9 +44,11 @@ public class GameOver : MonoBehaviour
     public void Reset()
     {
         Debug.Log("Restarting current level...");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        isGameOver = false;
         Time.timeScale = 1f;
+        isGameOver = false;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        
+        
     }
 
     public void Quit()

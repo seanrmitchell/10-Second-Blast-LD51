@@ -18,7 +18,7 @@ public class DeathBox : MonoBehaviour
     private void Awake()
     {
 
-        currentCoolDown = coolDownBox;
+        currentCoolDown = 0;
 
         boxTransform = transform.Find("SquareShrink");
         leftTransform = transform.Find("Left");

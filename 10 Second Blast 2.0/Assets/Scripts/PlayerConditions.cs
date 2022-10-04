@@ -27,6 +27,14 @@ public class PlayerConditions : MonoBehaviour
         health = maxHealth;
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            UpdateHealth(-1);
+        }
+    }
+
     public void UpdateHealth(float mod)
     {
         health += mod;
